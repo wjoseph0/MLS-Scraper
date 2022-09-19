@@ -1,12 +1,15 @@
+import { clearMain, saveApiKey } from './helper.js'
+import showApp from './app.js'
+
 export default function authenticate () {
-  const apiKeySubmit = document.getElementById('api-key-submit')
-  const apiKeyInput = document.getElementById('api-key')
+  const apiKeyInput = document.getElementById('apiKeyInput')
+  const apiKeySave = document.getElementById('apiKeySave')
 
-  function saveApiKey (key) {
-    sessionStorage.setItem('api-key', key)
-  }
-
-  apiKeySubmit.addEventListener('click', () => {
-    saveApiKey(apiKeyInput.value)
+  apiKeySave.addEventListener('click', () => {
+    if (apiKeyInput.value !== '') {
+      saveApiKey(apiKeyInput.value)
+      clearMain()
+      showApp()
+    }
   })
 }

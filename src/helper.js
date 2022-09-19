@@ -4,3 +4,7 @@ export function clearMain () {
     main.removeChild(main.firstChild)
   }
 }
+
+export function saveApiKey (apiKey) {
+  sessionStorage.setItem('apiKey', apiKey)
+}

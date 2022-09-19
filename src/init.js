@@ -15,14 +15,17 @@ function setMain () {
   const main = document.createElement('main')
   const authForm = document.createElement('form')
   const apiKeyLabel = document.createElement('label')
+  const apiGetKey = document.createElement('a')
   const apiKeyInput = document.createElement('input')
   const apiKeySubmit = document.createElement('button')
 
-  apiKeyLabel.textContent = 'API Key:'
-  apiKeyLabel.for = 'api-key'
+  apiKeyLabel.textContent = 'RapidAPI Key:'
 
-  apiKeyInput.id = 'api-key'
-  apiKeyInput.name = 'api-key'
+  apiGetKey.textContent = '(i need a key)'
+  apiGetKey.href = 'https://rapidapi.com/developer/'
+  apiGetKey.target = '_blank'
+
+  apiKeyInput.id = 'apiKeyInput'
   apiKeyInput.type = 'password'
   apiKeyInput.minLength = '50'
   apiKeyInput.autocomplete = 'current-password'
@@ -30,11 +33,12 @@ function setMain () {
   apiKeyInput.required = true
 
   apiKeySubmit.textContent = 'Save'
-  apiKeySubmit.id = 'api-key-submit'
-  apiKeySubmit.type = 'submit'
+  apiKeySubmit.id = 'apiKeySave'
+  apiKeySubmit.type = 'button'
 
   authForm.appendChild(apiKeyLabel)
   authForm.appendChild(apiKeyInput)
+  authForm.appendChild(apiGetKey)
   authForm.appendChild(apiKeySubmit)
   main.appendChild(authForm)
   body.appendChild(main)
