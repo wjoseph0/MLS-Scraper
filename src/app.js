@@ -1,3 +1,5 @@
+import { fetchApiData } from './helper'
+
 export default function showApp () {
   const main = document.querySelector('main')
   const appForm = document.createElement('form')
@@ -25,25 +27,7 @@ export default function showApp () {
     if (cityInput.value !== '' && stateInput.value !== '') {
       console.log('city: ' + cityInput.value)
       console.log('state: ' + stateInput.value)
-      fetchData(cityInput.value, stateInput.value)
+      fetchApiData(cityInput.value, stateInput.value)
     }
   })
-}
-
-function fetchData (city, stateCode) {
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': sessionStorage.getItem('apiKey'),
-      'X-RapidAPI-Host': 'realty-in-us.p.rapidapi.com'
-    }
-  }
-
-  fetch(
-    `https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale?city=${city}&state_code=${stateCode}&offset=0&limit=200&sort=relevance`,
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => console.log(response))
-    .catch((err) => console.error(err))
 }
