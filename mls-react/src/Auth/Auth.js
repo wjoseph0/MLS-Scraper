@@ -18,14 +18,14 @@ export const Auth = () =>{
     const options = {
       method: 'GET',
       headers: {
-      'X-RapidAPI-Key': '10c2e447bemsh27af4b8b457e846p14d6f3jsn455ace2cd890',
+      'X-RapidAPI-Key': apiKey,
       'X-RapidAPI-Host': 'realty-in-us.p.rapidapi.com'
       }
     };
-
+    localStorage.setItem("apiKey", {apiKey});
     async function fetchData() {
       const data = await fetch('https://realty-in-us.p.rapidapi.com/locations/auto-complete?input=new%20york', options).then(response => response.json()).then(response => console.log(response)).catch(err => console.error(err));
-      setListings(data[0])
+      setListings(data)
     };
     fetchData()
   }
@@ -33,7 +33,8 @@ export const Auth = () =>{
 
 
   useEffect(() => {
-  }, []);
+    console.log(apiKey)
+  }, [apiKey]);
 
 
 
@@ -42,10 +43,9 @@ export const Auth = () =>{
   return(
       <div style={{ textAlign: 'center'}}>
         <div id="header">RapidAPI Key:</div>
-        <input id="apiKeyInput"></input>
-        <button onClick={setApiKey} id="submit">submit</button>
+        <input id="apiKeyInput" placeholder = "Rapid API" onChange={e => setApiKey(e.target.value)} ></input>
         <button onClick={callAPI} id="refresh">refresh</button>
-        <ul>{listings.map(listing => <li key={listing._id}>{listing._score}</li>)}</ul>
+        <p>Rapid Apikey: {apiKey}</p>
       </div>
 
   );
