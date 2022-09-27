@@ -3,6 +3,8 @@ import React, { useState, useEffect, Fragment } from 'react';
 
 export const Auth = () =>{
   const [apiKey, setApiKey] = useState('')
+  const [cityInput, setCityInput] = useState('')
+  const [stateInput, setStateInput] = useState('')
   const [listings, setListings] = useState([]);
   const [data, getData] = useState([]);
   const apiURL = `https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale?city=Chicago&state_code=IL&offset=0&limit=200&sort=relevance`
@@ -14,8 +16,8 @@ export const Auth = () =>{
     }
   };
 
-  function setupUrl(state, city){
-    const finalURL = `https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale?city=${city}&state_code=${state}&offset=0&limit=200&sort=relevance`
+  function setupUrl(){
+    const finalURL = `https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale?city=${cityInput}&state_code=${stateInput}&offset=0&limit=200&sort=relevance`
     return finalURL
   }
 
@@ -56,6 +58,8 @@ export const Auth = () =>{
         <div style={{ textAlign: 'center'}}>
           <div id="header">RapidAPI Key:</div>
           <input id="apiKeyInput" placeholder = "Rapid API" onChange={e => setApiKey(e.target.value)} ></input>
+          <input id="CityInput" placeholder = "Enter City" onChange={e => setCityInput(e.target.value)} ></input>
+          <input id="stateInput" placeholder = "Enter State" onChange={e => setStateInput(e.target.value)} ></input>
           <button onClick={fetchData} id="refresh">refresh</button>
           <button onClick={fetchAPI} id="fetch">fetch</button>
           <p>Rapid Apikey: {apiKey}</p>
