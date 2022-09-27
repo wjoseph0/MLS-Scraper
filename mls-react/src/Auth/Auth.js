@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 
 
 export const Auth = () =>{
@@ -51,7 +51,7 @@ export const Auth = () =>{
 
 
 
-
+  //reference; https://stackoverflow.com/questions/47756703/react-multiple-table-rows-in-array-map-during-render
   return(
         <div style={{ textAlign: 'center'}}>
           <div id="header">RapidAPI Key:</div>
@@ -59,7 +59,19 @@ export const Auth = () =>{
           <button onClick={fetchData} id="refresh">refresh</button>
           <button onClick={fetchAPI} id="fetch">fetch</button>
           <p>Rapid Apikey: {apiKey}</p>
-          <ul>{data.map(listing => <li key={listing.property_id}>{listing.property_id}</li>)}</ul>
+          <tbody>
+            {data.map((item, i) => {
+              return [
+                  <tr key={i}>
+                    <td>{item.property_id}</td>
+                    <td>{item.price}</td>
+                    <td>{item.address.line}</td>
+                    <td>{item.baths}</td>
+                    <td>{item.beds}</td>
+                  </tr>
+                  ];
+            })}
+          </tbody>
         </div>
   );
 };
