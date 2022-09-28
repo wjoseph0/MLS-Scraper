@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 
 
-export const LocationForm = () =>{
-  const [cityInput, setCityInput] = useState("")
-  const [stateInput, setStateInput] = useState("")
-
-
+export const LocationForm = (data) =>{
 
   return(
-    <>
-      <div id="header">Enter City:</div>
-      <input id="cityInput"></input>
-      <div id="header">Enter State:</div>
-      <input id="stateInput"></input>
-      <button onClick={setCityInput()} id="submit">submit</button>
-    </>
+    <tbody>
+      {data.map((item, i) => {
+        return [
+            <tr key={i}>
+              <td>{item.property_id}</td>
+              <td>{item.price}</td>
+              <td>{item.address.line}</td>
+              <td>{item.baths}</td>
+              <td>{item.beds}</td>
+            </tr>
+            ];
+      })}
+    </tbody>
   );
 };

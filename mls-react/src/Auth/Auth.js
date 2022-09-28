@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import {Table} from '../Table/Table';
 
 
 export const Auth = () =>{
@@ -63,19 +64,7 @@ export const Auth = () =>{
           <button onClick={fetchData} id="refresh">refresh</button>
           <button onClick={fetchAPI} id="fetch">fetch</button>
           <p>Rapid Apikey: {apiKey}</p>
-          <tbody>
-            {data.map((item, i) => {
-              return [
-                  <tr key={i}>
-                    <td>{item.property_id}</td>
-                    <td>{item.price}</td>
-                    <td>{item.address.line}</td>
-                    <td>{item.baths}</td>
-                    <td>{item.beds}</td>
-                  </tr>
-                  ];
-            })}
-          </tbody>
+          <Table data={data} />
         </div>
   );
 };

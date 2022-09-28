@@ -1,24 +1,20 @@
 import React, { Fragment } from "react";
 
-<tbody>
-      {myList.map((item, i) => {
-        return (
-          <Fragment>
-            <tr key={i} onClick={toggleMobileOpen.bind(this, i)}>
-              <td className="toggler">
-                {item.mobile_open && <ArrowUp />}
-                {!item.mobile_open && <ArrowDown />}
-              </td>
-              <td>{item.elem_one}</td>
-              <td>{item.elem_two}</td>
-              <td>{item.elem_three}</td>
+export const Table = ({data}) => {
+
+  return(
+    <tbody>
+      {data.map((item, i) => {
+        return [
+            <tr key={i}>
+              <td>{item.property_id}</td>
+              <td>{item.price}</td>
+              <td>{item.address.line}</td>
+              <td>{item.baths}</td>
+              <td>{item.beds}</td>
             </tr>
-            {item.mobile_open &&
-              <tr className="test-td">
-                <td>...</td>
-              </tr>
-            }
-          </Fragment>
-        );
+            ];
       })}
     </tbody>
+  );
+};
