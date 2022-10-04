@@ -1,3 +1,4 @@
+import React from 'react'
 import { clearMain, saveApiKey } from './helper.js'
 import showApp from './app.js'
 

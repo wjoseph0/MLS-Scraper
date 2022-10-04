@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function clearMain () {
   const main = document.querySelector('main')
   while (main.firstChild) {
