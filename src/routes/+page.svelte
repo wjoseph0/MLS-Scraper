@@ -1,5 +1,10 @@
-<script>
-  import AppForm from '../components/appForm.svelte';
+<script lang="ts">
 </script>
 
-<AppForm />
+<h1>Welcome to Open MLS!</h1>
+
+<style>
+  h1 {
+    text-align: center;
+  }
+</style>
