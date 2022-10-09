@@ -3,7 +3,9 @@
   import Listings from '../../components/listings.svelte';
 </script>
 
-<title>Open MLS</title>
+<svelte:head>
+  <title>Open MLS</title>
+</svelte:head>
 
 <h1>Open MLS</h1>
 
