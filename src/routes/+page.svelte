@@ -1,6 +1,3 @@
-<script lang="ts">
-</script>
-
 <h1>Welcome to Open MLS!</h1>
 
 <a href="../app">Go to app</a>
