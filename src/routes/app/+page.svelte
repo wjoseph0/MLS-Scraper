@@ -1,6 +1,6 @@
 <script lang="ts">
-  import AppForm from '../../components/appForm.svelte';
-  import Listings from '../../components/listings.svelte';
+  import AppForm from '../../components/AppForm.svelte';
+  import ListingsTable from '../../components/ListingsTable.svelte';
 </script>
 
 <h1>Open MLS</h1>
@@ -10,7 +10,7 @@
 </section>
 
 <section>
-  <Listings />
+  <ListingsTable />
 </section>
 
 <style>
