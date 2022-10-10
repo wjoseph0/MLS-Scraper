@@ -11,6 +11,14 @@
 <div class="listings">
   {#if listingsResult[0] !== 'test'}
     <h3>Listings:</h3>
+
+    <select>
+      <option>newest-oldest</option>
+      <option>oldest-newest</option>
+      <option>price (high-low)</option>
+      <option>price (low-high)</option>
+    </select>
+
     <table>
       <tr>
         <th>Address</th>
@@ -60,8 +68,6 @@
   }
 
   .table-data:hover {
-    border: 2px solid;
     background-color: lightyellow;
-    text-decoration: underline;
   }
 </style>
