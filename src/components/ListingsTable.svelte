@@ -20,24 +20,31 @@
     </select>
 
     <table>
-      <tr>
-        <th>Address</th>
-        <th>Price</th>
-        <th>Bed</th>
-        <th>Bath</th>
-        <th>Sqft</th>
-        <th>Sqft Lot</th>
-      </tr>
-      {#each listingsResult as listing}
-        <tr class="table-data">
-          <td>{listing.location.address.line}</td>
-          <td>${listing.list_price}</td>
-          <td>{listing.description.beds}</td>
-          <td>{listing.description.baths}</td>
-          <td>{listing.description.sqft}</td>
-          <td>{listing.description.lot_sqft}</td>
+      <thead>
+        <tr>
+          <th>Address</th>
+          <th>Price</th>
+          <th>Bed</th>
+          <th>Bath</th>
+          <th>Sqft</th>
+          <th>Sqft Lot</th>
         </tr>
-      {/each}
+      </thead>
+      <tbody>
+        {#each listingsResult as listing}
+          <tr class="table-data">
+            <td id="address-cell">
+              <img src={listing.primary_photo.href} alt="x" />
+              {listing.location.address.line}
+            </td>
+            <td>${listing.list_price}</td>
+            <td>{listing.description.beds}</td>
+            <td>{listing.description.baths}</td>
+            <td>{listing.description.sqft}</td>
+            <td>{listing.description.lot_sqft}</td>
+          </tr>
+        {/each}
+      </tbody>
     </table>
   {:else}
     <p>Listings will show up here.</p>
@@ -59,7 +66,7 @@
   }
 
   table {
-    width: 100%;
+    width: 700px;
   }
 
   th,
@@ -69,5 +76,17 @@
 
   .table-data:hover {
     background-color: lightyellow;
+  }
+
+  #address-cell {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .listings {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 </style>
