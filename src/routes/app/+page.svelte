@@ -1,6 +1,6 @@
 <script lang="ts">
-  import AppForm from '../../components/AppForm.svelte';
-  import ListingsTable from '../../components/ListingsTable.svelte';
+  import AppForm from './AppForm.svelte';
+  import ListingsTable from './ListingsTable.svelte';
 </script>
 
 <h1>Open MLS</h1>

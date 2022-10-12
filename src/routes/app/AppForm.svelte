@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { listings } from '../stores/listingsStore';
+  import { listings } from '../../stores/listingsStore';
 
   let apiKey: string;
   let zipcode: number;
