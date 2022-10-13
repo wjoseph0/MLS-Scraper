@@ -1,31 +1,6 @@
 <script lang="ts">
-  import { listings } from '../../stores/listingsStore';
-
-  let listingsResult: any;
-
-  listings.subscribe((value) => {
-    listingsResult = value;
-  });
-
-  let listingsArray: any = [];
-  let listingsArraySorted: any = [];
-
-  $: if (listingsResult[0] !== 'test') {
-    for (let i = 0; listingsResult[i]; i++) {
-      listingsArray[i] = {
-        id: i,
-        img: listingsResult[i].primary_photo.href,
-        address: listingsResult[i].location.address.line,
-        price: listingsResult[i].list_price,
-        bed: listingsResult[i].description.beds,
-        bath: listingsResult[i].description.baths,
-        sqft: listingsResult[i].description.sqft,
-        lot_sqft: listingsResult[i].description.lot_sqft,
-        list_date: listingsResult[i].list_date
-      };
-      listingsArray = listingsArray;
-    }
-  }
+  export let listings: any;
+  let listingsSorted: any;
 
   // Holds table sort state.  Initialized to reflect table sorted by id column ascending.
   let sortBy = { col: 'id', ascending: true };
@@ -41,82 +16,69 @@
     // Modifier to sorting function for ascending or descending
     let sortModifier = sortBy.ascending ? 1 : -1;
 
-    let sort = (a: { [x: string]: number }, b: { [x: string]: number }) =>
+    let sort = (a: any, b: any) =>
       a[column] < b[column]
         ? -1 * sortModifier
         : a[column] > b[column]
         ? 1 * sortModifier
         : 0;
 
-    listingsArraySorted = listingsArray.sort(sort);
-    console.log(listingsArraySorted);
+    listingsSorted = listings.sort(sort);
   };
 </script>
 
 <div class="listings">
-  {#if listingsResult[0] !== 'test'}
-    <div id="table-info">
-      <h3>Listings:</h3>
-      <p>Results: {listingsArray.length}</p>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Address</th>
-          <th on:click={() => sort('price')}>Price</th>
-          <th on:click={() => sort('bed')}>Bed</th>
-          <th on:click={() => sort('bath')}>Bath</th>
-          <th on:click={() => sort('sqft')}>Sqft</th>
-          <th on:click={() => sort('lot_sqft')}>Sqft Lot</th>
-          <th on:click={() => sort('id')}>List Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#if listingsArraySorted[0] == null}
-          {#each listingsArray as listing}
-            <tr class="table-data">
-              <td id="address-cell">
-                <img src={listing.img} alt="x" />
-                {listing.address}
-              </td>
-              <td>${listing.price}</td>
-              <td>{listing.bed}</td>
-              <td>{listing.bath}</td>
-              <td>{listing.sqft}</td>
-              <td>{listing.lot_sqft}</td>
-              <td>{listing.list_date}</td>
-            </tr>
-          {/each}
-        {:else}
-          {#each listingsArraySorted as listing}
-            <tr class="table-data">
-              <td id="address-cell">
-                <img src={listing.img} alt="x" />
-                {listing.address}
-              </td>
-              <td>${listing.price}</td>
-              <td>{listing.bed}</td>
-              <td>{listing.bath}</td>
-              <td>{listing.sqft}</td>
-              <td>{listing.lot_sqft}</td>
-              <td>{listing.list_date}</td>
-            </tr>
-          {/each}
-        {/if}
-      </tbody>
-    </table>
-  {:else}
-    <p>Listings will show up here.</p>
-  {/if}
+  <table>
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th on:click={() => sort('list_price')}>Price</th>
+        <th on:click={() => sort('list_date')}>List Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#if listingsSorted}
+        {#each listingsSorted as listing}
+          <tr class="table-data">
+            <td id="address-cell">
+              <img src={listing.primary_photo.href} alt="x" />
+              {listing.location.address.line}
+              <p>
+                {listing.description.beds} bed {listing.description.baths} bath
+                <br />
+                {listing.description.sqft} sqft
+                <br />
+                {listing.description.lot_sqft} sqft lot
+              </p>
+            </td>
+            <td>${listing.list_price}</td>
+            <td>{listing.list_date}</td>
+          </tr>
+        {/each}
+      {:else}
+        {#each listings as listing}
+          <tr class="table-data">
+            <td id="address-cell">
+              <img src={listing.primary_photo.href} alt="x" />
+              {listing.location.address.line}
+              <p>
+                {listing.description.beds} bed {listing.description.baths} bath
+                <br />
+                {listing.description.sqft} sqft
+                <br />
+                {listing.description.lot_sqft} sqft lot
+              </p>
+            </td>
+            <td>${listing.list_price}</td>
+            <td>{listing.list_date}</td>
+          </tr>
+        {/each}
+      {/if}
+    </tbody>
+  </table>
 </div>
 
 <style>
-  h3,
-  p {
-    text-align: center;
-  }
-
   table,
   th,
   td {
@@ -136,12 +98,6 @@
 
   .table-data:hover {
     background-color: lightyellow;
-  }
-
-  #table-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 
   #address-cell {

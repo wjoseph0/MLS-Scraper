@@ -1,9 +1,9 @@
 <script lang="ts">
   import ListingsTable from './ListingsTable.svelte';
-  import { listings } from '../../stores/listingsStore';
 
   let apiKey: string;
   let zipcode: number;
+  let listings: any;
 
   $: apiOptions = {
     method: 'POST',
@@ -22,9 +22,8 @@
       apiOptions
     );
     let data = await res.json();
-    console.log(data);
     if (res.ok) {
-      listings.set(data.data.home_search.results);
+      listings = data.data.home_search.results;
     }
   }
 </script>
@@ -47,11 +46,20 @@
 </section>
 
 <section>
-  <ListingsTable />
+  {#if listings}
+    <div id="table-info">
+      <h3>Listings:</h3>
+      <p>Results: {listings.length}</p>
+    </div>
+    <ListingsTable {listings} />
+  {:else}
+    <p>Listings will show up here.</p>
+  {/if}
 </section>
 
 <style>
-  h1 {
+  h1,
+  p {
     text-align: center;
   }
 
@@ -72,5 +80,11 @@
     border-radius: 10px;
     border-width: 1.5px;
     padding: 8px;
+  }
+
+  #table-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>
