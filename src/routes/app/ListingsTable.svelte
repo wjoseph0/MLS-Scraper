@@ -2,7 +2,6 @@
   import { listings } from '../../stores/listingsStore';
 
   let listingsResult: any;
-  let selected: any;
 
   listings.subscribe((value) => {
     listingsResult = value;
