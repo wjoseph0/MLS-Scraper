@@ -1,4 +1,8 @@
 import React from "react";
+import { AgGridReact } from "ag-grid-react";
+
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 export const Table = ({ data }) => {
   return (
@@ -8,11 +12,8 @@ export const Table = ({ data }) => {
           return [
             <tr key={i}>
               <td>{item.property_id}</td>
-              <td>{item.price}</td>
-              <td>{item.address.line}</td>
-              <td>{item.baths}</td>
-              <td>{item.beds}</td>
-              <td>{item.beds}</td>
+              <td>{item.list_price}</td>
+              <td>{item.location.address.city}</td>
             </tr>,
           ];
         })}

@@ -1,33 +1,41 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Table } from "../Table/Table";
+import { LocationForm } from "../LocationForm/LocationForm";
 
 //This compoent should just handle
 export const Auth = () => {
   const [apiKey, setApiKey] = useState("");
-  const [cityInput, setCityInput] = useState("");
-  const [stateInput, setStateInput] = useState("");
+  const [zipInput, setZipInput] = useState("");
   const [listings, setListings] = useState([]);
   const [data, getData] = useState([]);
-  const apiURL = `https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale?city=Chicago&state_code=IL&offset=0&limit=200&sort=relevance`;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": apiKey,
-      "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
-    },
+
+  const body = {
+    limit: 200,
+    offset: 0,
+    postal_code: zipInput,
+    status: ["for_sale", "ready_to_build"],
+    sort: { direction: "desc", field: "list_date" },
   };
 
-  function setupUrl() {
-    const finalURL = `https://realty-in-us.p.rapidapi.com/properties/v2/list-for-sale?city=${cityInput}&state_code=${stateInput}&offset=0&limit=200&sort=relevance`;
-    return finalURL;
-  }
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "X-RapidAPI-Key": "10c2e447bemsh27af4b8b457e846p14d6f3jsn455ace2cd890",
+      "X-RapidAPI-Host": "realty-in-us.p.rapidapi.com",
+    },
+    body: JSON.stringify(body),
+  };
 
   async function fetchData() {
-    const data = await fetch(setupUrl("IL", "Chicago"), options)
+    const data = await fetch(
+      `https://realty-in-us.p.rapidapi.com/properties/v3/list`,
+      options
+    )
       .then((response) => response.json())
       .then((response) => {
-        console.log(response.properties);
-        getData(response.properties);
+        console.log(response);
+        getData(response.data.home_search.results);
       })
       .catch((err) => console.error(err));
   }
@@ -54,20 +62,16 @@ export const Auth = () => {
         onChange={(e) => setApiKey(e.target.value)}
       ></input>
       <input
-        id="CityInput"
-        placeholder="Enter City"
-        onChange={(e) => setCityInput(e.target.value)}
-      ></input>
-      <input
-        id="stateInput"
-        placeholder="Enter State"
-        onChange={(e) => setStateInput(e.target.value)}
+        id="zipInput"
+        placeholder="Enter ZipCode"
+        onChange={(e) => setZipInput(e.target.value)}
       ></input>
       <button onClick={fetchData} id="refresh">
         refresh
       </button>
       <p>Rapid Apikey: {apiKey}</p>
       <Table data={data} />
+      <LocationForm />
     </div>
   );
 };
