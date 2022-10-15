@@ -51,7 +51,7 @@
       <h3>Listings:</h3>
       <p>Results: {listings.length}</p>
     </div>
-    <ListingsTable {listings} />
+    <ListingsTable bind:listings={listings} />
   {:else}
     <p>Listings will show up here.</p>
   {/if}
