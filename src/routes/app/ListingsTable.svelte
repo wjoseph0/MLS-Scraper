@@ -1,6 +1,5 @@
 <script lang="ts">
   export let listings: any;
-  let listingsSorted: any;
 
   // Holds table sort state.  Initialized to reflect table sorted by id column ascending.
   let sortBy = { col: 'id', ascending: true };
@@ -23,11 +22,11 @@
         ? 1 * sortModifier
         : 0;
 
-    listingsSorted = listings.sort(sort);
+    listings = listings.sort(sort);
   };
 </script>
 
-<div class="listings">
+<div>
   <table>
     <thead>
       <tr>
@@ -37,43 +36,23 @@
       </tr>
     </thead>
     <tbody>
-      {#if listingsSorted}
-        {#each listingsSorted as listing}
-          <tr class="table-data">
-            <td id="address-cell">
-              <img src={listing.primary_photo.href} alt="x" />
-              {listing.location.address.line}
-              <p>
-                {listing.description.beds} bed {listing.description.baths} bath
-                <br />
-                {listing.description.sqft} sqft
-                <br />
-                {listing.description.lot_sqft} sqft lot
-              </p>
-            </td>
-            <td>${listing.list_price}</td>
-            <td>{listing.list_date}</td>
-          </tr>
-        {/each}
-      {:else}
-        {#each listings as listing}
-          <tr class="table-data">
-            <td id="address-cell">
-              <img src={listing.primary_photo.href} alt="x" />
-              {listing.location.address.line}
-              <p>
-                {listing.description.beds} bed {listing.description.baths} bath
-                <br />
-                {listing.description.sqft} sqft
-                <br />
-                {listing.description.lot_sqft} sqft lot
-              </p>
-            </td>
-            <td>${listing.list_price}</td>
-            <td>{listing.list_date}</td>
-          </tr>
-        {/each}
-      {/if}
+      {#each listings as listing}
+        <tr class="table-data">
+          <td id="address-cell">
+            <img src={listing.primary_photo.href} alt="x" />
+            {listing.location.address.line}
+            <p>
+              {listing.description.beds} bed {listing.description.baths} bath
+              <br />
+              {listing.description.sqft} sqft
+              <br />
+              {listing.description.lot_sqft} sqft lot
+            </p>
+          </td>
+          <td>${listing.list_price}</td>
+          <td>{listing.list_date}</td>
+        </tr>
+      {/each}
     </tbody>
   </table>
 </div>
