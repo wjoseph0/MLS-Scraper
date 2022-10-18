@@ -1,9 +1,12 @@
 <script lang="ts">
+  import { fade } from 'svelte/transition';
+  import FilterForm from './FilterForm.svelte';
   import ListingsTable from './ListingsTable.svelte';
 
   let apiKey: string;
   let zipcode: number;
   let listings: any;
+  export let showFilterForm = false;
 
   $: apiOptions = {
     method: 'POST',
@@ -17,13 +20,13 @@
   };
 
   async function handleSubmit() {
-    let res = await fetch(
-      'https://realty-in-us.p.rapidapi.com/properties/v3/list',
-      apiOptions
-    );
+    listings = 'loading...';
+    let res = await fetch('https://realty-in-us.p.rapidapi.com/properties/v3/list', apiOptions);
     let data = await res.json();
     if (res.ok) {
       listings = data.data.home_search.results;
+    } else {
+      alert('Search failed');
     }
   }
 </script>
@@ -35,27 +38,36 @@
       Enter api key:
       <input type="text" bind:value={apiKey} required />
     </label>
-
     <label>
       Enter zipcode:
       <input type="number" bind:value={zipcode} required />
     </label>
-
     <button type="submit">Search</button>
   </form>
 </section>
 
-<section>
-  {#if listings}
-    <div id="table-info">
+{#if listings === 'loading...'}
+  <p>loading...</p>
+{:else if listings === undefined}
+  <p>Listings will show up here.</p>
+{:else}
+  <section>
+    <div id="table-info" in:fade>
       <h3>Listings:</h3>
+      <button
+        on:click={() => {
+          showFilterForm = true;
+        }}>Filter</button
+      >
       <p>Results: {listings.length}</p>
     </div>
-    <ListingsTable bind:listings={listings} />
-  {:else}
-    <p>Listings will show up here.</p>
+    <ListingsTable bind:listings />
+  </section>
+
+  {#if showFilterForm}
+    <FilterForm bind:showFilterForm />
   {/if}
-</section>
+{/if}
 
 <style>
   h1,
